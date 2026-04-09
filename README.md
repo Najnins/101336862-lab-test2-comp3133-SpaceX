@@ -20,7 +20,7 @@ Users can view all missions, filter by launch year, and see detailed information
 
 ##  Technologies Used
 
-* Angular 21
+* Angular 17
 * Angular Material
 * TypeScript
 * RxJS
