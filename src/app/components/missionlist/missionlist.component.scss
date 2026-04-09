@@ -1,0 +1,364 @@
+/* src/app/components/missionlist/missionlist.component.scss */
+
+.mission-list-container {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* === Page Header === */
+.page-header {
+  margin-bottom: 28px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.page-title {
+  font-family: 'Courier New', monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0;
+
+  .title-accent {
+    color: #4ea8de;
+    margin-right: 12px;
+  }
+}
+
+.mission-stats {
+  display: flex;
+  gap: 10px;
+
+  .stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(78, 168, 222, 0.12);
+    border: 1px solid rgba(78, 168, 222, 0.3);
+    border-radius: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+    color: #4ea8de;
+
+    mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
+
+    .stat-label {
+      opacity: 0.7;
+      margin-left: 2px;
+    }
+  }
+}
+
+/* === Loading / Error / Empty states === */
+.loading-state, .error-state, .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  gap: 20px;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: 'Courier New', monospace;
+}
+
+.loading-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.loading-text {
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: #4ea8de;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.error-icon, .empty-icon {
+  font-size: 56px;
+  width: 56px;
+  height: 56px;
+  opacity: 0.4;
+}
+
+/* === Cards Grid === */
+.missions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.mission-card {
+  background: linear-gradient(135deg, rgba(13, 27, 42, 0.9) 0%, rgba(15, 32, 55, 0.9) 100%);
+  border: 1px solid rgba(78, 168, 222, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #4ea8de, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    border-color: rgba(78, 168, 222, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(78, 168, 222, 0.1);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+/* Card Top Bar */
+.card-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .flight-num {
+    font-family: 'Courier New', monospace;
+    font-size: 0.72rem;
+    color: rgba(78, 168, 222, 0.7);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .launch-year-badge {
+    font-family: 'Courier New', monospace;
+    font-size: 0.72rem;
+    padding: 2px 10px;
+    background: rgba(78, 168, 222, 0.12);
+    border: 1px solid rgba(78, 168, 222, 0.25);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.65);
+    letter-spacing: 0.05em;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-left: auto;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px currentColor;
+  }
+}
+
+/* Card Main */
+.card-main {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.patch-container {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+
+  .mission-patch {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px rgba(78, 168, 222, 0.3));
+  }
+
+  .no-patch {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(78, 168, 222, 0.08);
+    border: 1px dashed rgba(78, 168, 222, 0.25);
+    border-radius: 50%;
+
+    mat-icon {
+      color: rgba(78, 168, 222, 0.4);
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
+
+.mission-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.mission-name {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rocket-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 8px;
+
+  .info-icon {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+    color: #4ea8de;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .rocket-name {
+    display: block;
+    font-family: 'Courier New', monospace;
+    font-size: 0.78rem;
+    color: #4ea8de;
+    font-weight: 600;
+  }
+
+  .rocket-type {
+    display: block;
+    font-family: 'Courier New', monospace;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: capitalize;
+  }
+}
+
+.mission-details {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.no-details {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.25);
+  font-style: italic;
+  margin: 0;
+}
+
+/* Card Links */
+.card-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(78, 168, 222, 0.1);
+
+  .spacer {
+    flex: 1;
+  }
+}
+
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &.article {
+    color: rgba(255, 167, 38, 0.7);
+    border-color: rgba(255, 167, 38, 0.2);
+    &:hover { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+  }
+
+  &.wiki {
+    color: rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.15);
+    &:hover { background: rgba(255, 255, 255, 0.1); color: #ffffff; }
+  }
+
+  &.video {
+    color: rgba(229, 57, 53, 0.7);
+    border-color: rgba(229, 57, 53, 0.2);
+    &:hover { background: rgba(229, 57, 53, 0.15); color: #ef5350; }
+  }
+}
+
+.details-btn {
+  background: rgba(78, 168, 222, 0.15) !important;
+  color: #4ea8de !important;
+  border: 1px solid rgba(78, 168, 222, 0.35) !important;
+  font-family: 'Courier New', monospace !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  height: 32px !important;
+  line-height: 32px !important;
+  transition: all 0.2s ease !important;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    margin-left: 2px;
+  }
+
+  &:hover {
+    background: rgba(78, 168, 222, 0.3) !important;
+    border-color: #4ea8de !important;
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .missions-grid {
+    grid-template-columns: 1fr;
+  }
+  .page-title {
+    font-size: 1.2rem;
+  }
+}

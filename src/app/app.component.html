@@ -1,0 +1,28 @@
+<!-- src/app/app.component.html -->
+<div class="app-wrapper">
+  <mat-toolbar class="app-toolbar" color="primary">
+    <div class="toolbar-content">
+      <div class="brand" routerLink="/missions">
+        <span class="brand-icon">🚀</span>
+        <div class="brand-text">
+          <span class="brand-title">SpaceX Mission Control</span>
+          <span class="brand-sub">COMP3133 · Lab Test 2 · 101336862</span>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <button mat-button routerLink="/missions">
+          <mat-icon>rocket_launch</mat-icon>
+          All Missions
+        </button>
+      </nav>
+    </div>
+  </mat-toolbar>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="app-footer">
+    <p>Data provided by <a href="https://docs.spacexdata.com" target="_blank">SpaceX REST API v3</a> · COMP3133 Lab Test 2</p>
+  </footer>
+</div>

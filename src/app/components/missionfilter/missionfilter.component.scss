@@ -1,0 +1,135 @@
+/* src/app/components/missionfilter/missionfilter.component.scss */
+
+.filter-panel {
+  background: linear-gradient(135deg, rgba(13, 27, 42, 0.95) 0%, rgba(20, 40, 70, 0.95) 100%);
+  border: 1px solid rgba(78, 168, 222, 0.25);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 28px;
+  backdrop-filter: blur(10px);
+}
+
+.filter-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+
+  .filter-icon {
+    color: #4ea8de;
+    font-size: 20px;
+  }
+
+  .filter-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #4ea8de;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+}
+
+.filter-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  .year-select {
+    width: 200px;
+
+    ::ng-deep {
+      .mat-mdc-form-field-outline {
+        color: rgba(78, 168, 222, 0.4);
+      }
+      .mat-mdc-form-field-outline-thick {
+        color: #4ea8de;
+      }
+      .mat-mdc-select-value,
+      .mat-mdc-form-field-label,
+      .mat-mdc-select-arrow {
+        color: rgba(255, 255, 255, 0.85);
+      }
+      .mat-mdc-text-field-wrapper {
+        background: rgba(117, 121, 124, 0.05);
+      }
+    }
+  }
+
+  .clear-btn {
+    height: 56px;
+    color: rgba(255, 255, 255, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+
+    mat-icon {
+      font-size: 16px;
+      margin-right: 4px;
+    }
+
+    &:hover:not([disabled]) {
+      background: rgba(255, 100, 100, 0.1) !important;
+      border-color: rgba(255, 100, 100, 0.4) !important;
+      color: #ff8080 !important;
+    }
+
+    &[disabled] {
+      opacity: 0.35;
+    }
+  }
+}
+
+.quick-filters {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  .quick-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .chip-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .year-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 14px;
+    background: rgba(78, 168, 222, 0.08);
+    border: 1px solid rgba(78, 168, 222, 0.25);
+    border-radius: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.65);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+
+    &:hover {
+      background: rgba(78, 168, 222, 0.18);
+      border-color: rgba(78, 168, 222, 0.5);
+      color: #4ea8de;
+    }
+
+    &.active {
+      background: rgba(78, 168, 222, 0.25);
+      border-color: #4ea8de;
+      color: #4ea8de;
+      font-weight: 700;
+    }
+  }
+}

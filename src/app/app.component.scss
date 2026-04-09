@@ -1,0 +1,119 @@
+/* src/app/app.component.scss */
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #0a0e1a;
+}
+
+.app-toolbar {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a2744 100%) !important;
+  border-bottom: 1px solid rgba(78, 168, 222, 0.3);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 70px !important;
+}
+
+.toolbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  text-decoration: none;
+
+  .brand-icon {
+    font-size: 2rem;
+    line-height: 1;
+    filter: drop-shadow(0 0 8px rgba(78, 168, 222, 0.6));
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand-title {
+    font-family: 'Orbitron', 'Courier New', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #4ea8de;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .brand-sub {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    color: rgba(78, 168, 222, 0.6);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+
+  button {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid rgba(78, 168, 222, 0.2);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+
+    mat-icon {
+      margin-right: 6px;
+      font-size: 18px;
+    }
+
+    &:hover {
+      background: rgba(78, 168, 222, 0.15) !important;
+      border-color: rgba(78, 168, 222, 0.5);
+      color: #4ea8de !important;
+    }
+  }
+}
+
+.main-content {
+  flex: 1;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 24px;
+  box-sizing: border-box;
+}
+
+.app-footer {
+  background: #050810;
+  border-top: 1px solid rgba(78, 168, 222, 0.15);
+  padding: 16px 24px;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+
+  a {
+    color: rgba(78, 168, 222, 0.6);
+    text-decoration: none;
+
+    &:hover {
+      color: #4ea8de;
+    }
+  }
+}

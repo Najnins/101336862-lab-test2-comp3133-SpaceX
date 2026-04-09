@@ -1,0 +1,217 @@
+<!-- src/app/components/missiondetails/missiondetails.component.html -->
+<div class="mission-details-container">
+
+  <!-- Back Button -->
+  <div class="back-nav">
+    <button mat-button class="back-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      Back to Missions
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <mat-spinner diameter="52" color="accent"></mat-spinner>
+    <p class="loading-text">LOADING MISSION DATA......</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error && !loading">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <p>Could not load mission #{{ flightNumber }}.</p>
+    <button mat-raised-button color="primary" (click)="loadMission(flightNumber)">
+      <mat-icon>refresh</mat-icon> Retry
+    </button>
+    <button mat-stroked-button (click)="goBack()">Go Back</button>
+  </div>
+
+  <!-- Mission Details -->
+  <div class="details-layout" *ngIf="!loading && !error && launch">
+
+    <!-- LEFT COLUMN -->
+    <div class="col-left">
+
+      <!-- Mission Patch -->
+      <div class="patch-card">
+        <div class="patch-wrapper">
+          <img
+            *ngIf="launch.links?.mission_patch_small"
+            [src]="launch.links.mission_patch_small"
+            [alt]="launch.mission_name + ' patch'"
+            class="patch-img">
+          <div *ngIf="!launch.links?.mission_patch_small" class="no-patch">
+            <mat-icon>rocket</mat-icon>
+            <span>No Patch</span>
+          </div>
+        </div>
+        <div class="patch-label">MISSION PATCH</div>
+      </div>
+
+      <!-- Status Card -->
+      <div class="status-card" [ngClass]="getStatusClass(launch.launch_success)">
+        <mat-icon class="status-icon">{{ getStatusIcon(launch.launch_success) }}</mat-icon>
+        <span class="status-text">{{ getStatusLabel(launch.launch_success) }}</span>
+      </div>
+
+      <!-- External Links -->
+      <div class="links-card">
+        <h3 class="card-section-title">
+          <mat-icon>link</mat-icon>
+          External Links
+        </h3>
+        <div class="link-list">
+          <a
+            *ngIf="launch.links?.article_link"
+            [href]="launch.links.article_link"
+            target="_blank"
+            class="ext-link article">
+            <mat-icon>article</mat-icon>
+            <span>Mission Article</span>
+            <mat-icon class="ext-arrow">open_in_new</mat-icon>
+          </a>
+          <a
+            *ngIf="launch.links?.wikipedia"
+            [href]="launch.links.wikipedia"
+            target="_blank"
+            class="ext-link wiki">
+            <mat-icon>menu_book</mat-icon>
+            <span>Wikipedia</span>
+            <mat-icon class="ext-arrow">open_in_new</mat-icon>
+          </a>
+          <a
+            *ngIf="launch.links?.video_link"
+            [href]="launch.links.video_link"
+            target="_blank"
+            class="ext-link video">
+            <mat-icon>play_circle_filled</mat-icon>
+            <span>Watch Video</span>
+            <mat-icon class="ext-arrow">open_in_new</mat-icon>
+          </a>
+          <p class="no-links"
+            *ngIf="!launch.links?.article_link && !launch.links?.wikipedia && !launch.links?.video_link">
+            No external links available.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="col-right">
+
+      <!-- Mission Header -->
+      <div class="mission-header-card">
+        <div class="flight-badge">FLIGHT #{{ launch.flight_number }}</div>
+        <h1 class="mission-title">{{ launch.mission_name }}</h1>
+        <div class="meta-row">
+          <span class="meta-chip">
+            <mat-icon>calendar_today</mat-icon>
+            {{ launch.launch_year }}
+          </span>
+          <span class="meta-chip" *ngIf="launch.upcoming">
+            <mat-icon>schedule</mat-icon>
+            Upcoming
+          </span>
+          <span class="meta-chip" *ngIf="!launch.upcoming">
+            <mat-icon>history</mat-icon>
+            Past Launch
+          </span>
+        </div>
+      </div>
+
+      <!-- Launch Date -->
+      <div class="info-card">
+        <h3 class="card-section-title">
+          <mat-icon>access_time</mat-icon>
+          Launch Date
+        </h3>
+        <p class="info-value">{{ formatDate(launch.launch_date_utc) }}</p>
+      </div>
+
+      <!-- Rocket Details -->
+      <div class="info-card">
+        <h3 class="card-section-title">
+          <mat-icon>settings</mat-icon>
+          Rocket Details
+        </h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">Rocket ID</span>
+            <span class="detail-value">{{ launch.rocket.rocket_id | uppercase }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Rocket Name</span>
+            <span class="detail-value highlight">{{ launch.rocket.rocket_name }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Rocket Type</span>
+            <span class="detail-value">{{ launch.rocket.rocket_type }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Launch Site -->
+      <div class="info-card">
+        <h3 class="card-section-title">
+          <mat-icon>location_on</mat-icon>
+          Launch Site
+        </h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">Site ID</span>
+            <span class="detail-value">{{ launch.launch_site.site_id }}</span>
+          </div>
+          <div class="detail-item full-width">
+            <span class="detail-label">Site Name</span>
+            <span class="detail-value highlight">{{ launch.launch_site.site_name_long }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mission Details -->
+      <div class="info-card" *ngIf="launch.details">
+        <h3 class="card-section-title">
+          <mat-icon>description</mat-icon>
+          Mission Details
+        </h3>
+        <p class="details-text">{{ launch.details }}</p>
+      </div>
+
+      <!-- Mission Patch (large) -->
+      <div class="info-card" *ngIf="launch.links?.mission_patch">
+        <h3 class="card-section-title">
+          <mat-icon>image</mat-icon>
+          Mission Patch (Full Size)
+        </h3>
+        <div class="large-patch-wrapper">
+          <img
+            [src]="launch.links.mission_patch"
+            [alt]="launch.mission_name + ' full patch'"
+            class="large-patch">
+        </div>
+      </div>
+
+      <!-- Failure Details -->
+      <div class="info-card failure-card" *ngIf="launch.launch_failure_details">
+        <h3 class="card-section-title failure">
+          <mat-icon>warning</mat-icon>
+          Failure Details
+        </h3>
+        <div class="detail-grid">
+          <div class="detail-item" *ngIf="launch.launch_failure_details.time">
+            <span class="detail-label">Time</span>
+            <span class="detail-value">T+{{ launch.launch_failure_details.time }}s</span>
+          </div>
+          <div class="detail-item" *ngIf="launch.launch_failure_details.altitude !== null">
+            <span class="detail-label">Altitude</span>
+            <span class="detail-value">{{ launch.launch_failure_details.altitude }} km</span>
+          </div>
+          <div class="detail-item full-width" *ngIf="launch.launch_failure_details.reason">
+            <span class="detail-label">Reason</span>
+            <span class="detail-value">{{ launch.launch_failure_details.reason }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

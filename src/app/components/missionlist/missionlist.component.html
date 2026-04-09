@@ -1,0 +1,137 @@
+<!-- src/app/components/missionlist/missionlist.component.html -->
+<div class="mission-list-container">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        <span class="title-accent">◈◈◈</span>
+        SpaceX Launch Missions    
+         <span class="title-accent">◈◈◈</span>
+      </h1>
+      <div class="mission-stats">
+        <div class="stat-pill">
+          <mat-icon>rocket_launch</mat-icon>
+          <span>{{ filteredLaunches.length }} <span class="stat-label">missions</span></span>
+        </div>
+        <div class="stat-pill" *ngIf="activeYear">
+          <mat-icon>calendar_today</mat-icon>
+          <span>{{ activeYear }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Component -->
+  <app-missionfilter
+    (yearSelected)="onYearSelected($event)"
+    (filterCleared)="onFilterCleared()">
+  </app-missionfilter>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="loading-inner">
+      <mat-spinner diameter="48" color="accent"></mat-spinner>
+      <p class="loading-text">LOADING MISSION DATA...</p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error && !loading">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <p>Failed to fetch mission data.</p>
+    <button mat-raised-button color="primary" (click)="loadAllLaunches()">
+      <mat-icon>refresh</mat-icon> Retry
+    </button>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!loading && !error && filteredLaunches.length === 0">
+    <mat-icon class="empty-icon">search_off</mat-icon>
+    <p>No missions found for {{ activeYear }}.</p>
+    <button mat-stroked-button (click)="onFilterCleared()">Show All</button>
+  </div>
+
+  <!-- Mission Cards Grid -->
+  <div class="missions-grid" *ngIf="!loading && !error && filteredLaunches.length > 0">
+    <div
+      class="mission-card"
+      *ngFor="let launch of filteredLaunches; trackBy: trackByFlight"
+      (click)="viewDetails(launch)">
+
+      <!-- Card Top Bar -->
+      <div class="card-topbar">
+        <span class="flight-num">#{{ launch.flight_number }}</span>
+        <span class="launch-year-badge">{{ launch.launch_year }}</span>
+        <span class="status-dot" [style.background]="getStatusColor(launch.launch_success)"
+          [matTooltip]="getStatusLabel(launch.launch_success)"></span>
+      </div>
+
+      <!-- Patch + Info -->
+      <div class="card-main">
+        <div class="patch-container">
+          <img
+            *ngIf="launch.links?.mission_patch_small"
+            [src]="launch.links.mission_patch_small"
+            [alt]="launch.mission_name + ' patch'"
+            class="mission-patch"
+            loading="lazy"
+            (error)="$any($event.target).src='assets/no-patch.png'">
+          <div *ngIf="!launch.links?.mission_patch_small" class="no-patch">
+            <mat-icon>rocket</mat-icon>
+          </div>
+        </div>
+
+        <div class="mission-info">
+          <h2 class="mission-name">{{ launch.mission_name }}</h2>
+
+          <div class="rocket-info">
+            <mat-icon class="info-icon">memory</mat-icon>
+            <div>
+              <span class="rocket-name">{{ launch.rocket.rocket_name }}</span>
+              <span class="rocket-type">{{ launch.rocket.rocket_type }}</span>
+            </div>
+          </div>
+
+          <p class="mission-details" *ngIf="launch.details">
+            {{ launch.details | slice:0:120 }}{{ launch.details.length > 120 ? '...' : '' }}
+          </p>
+          <p class="no-details" *ngIf="!launch.details">No mission details available.</p>
+        </div>
+      </div>
+
+      <!-- Card Links -->
+      <div class="card-links" (click)="$event.stopPropagation()">
+        <a
+          *ngIf="launch.links?.article_link"
+          [href]="launch.links.article_link"
+          target="_blank"
+          class="link-btn article"
+          matTooltip="Read Article">
+          <mat-icon>article</mat-icon>
+        </a>
+        <a
+          *ngIf="launch.links?.wikipedia"
+          [href]="launch.links.wikipedia"
+          target="_blank"
+          class="link-btn wiki"
+          matTooltip="Wikipedia">
+          <mat-icon>menu_book</mat-icon>
+        </a>
+        <a
+          *ngIf="launch.links?.video_link"
+          [href]="launch.links.video_link"
+          target="_blank"
+          class="link-btn video"
+          matTooltip="Watch Video">
+          <mat-icon>play_circle</mat-icon>
+        </a>
+        <div class="spacer"></div>
+        <button mat-flat-button class="details-btn" (click)="viewDetails(launch)">
+          Details
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

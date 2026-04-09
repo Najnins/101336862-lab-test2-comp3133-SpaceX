@@ -1,0 +1,459 @@
+/* src/app/components/missiondetails/missiondetails.component.scss */
+
+.mission-details-container {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* === Back Nav === */
+.back-nav {
+  margin-bottom: 24px;
+}
+
+.back-btn {
+  color: rgba(78, 168, 222, 0.8) !important;
+  font-family: 'Courier New', monospace !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  border: 1px solid rgba(78, 168, 222, 0.2) !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+
+  mat-icon {
+    margin-right: 6px;
+    font-size: 18px;
+  }
+
+  &:hover {
+    background: rgba(78, 168, 222, 0.1) !important;
+    color: #4ea8de !important;
+    border-color: rgba(78, 168, 222, 0.4) !important;
+  }
+}
+
+/* === Loading / Error States === */
+.loading-state, .error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  gap: 20px;
+  font-family: 'Courier New', monospace;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.loading-text {
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: #4ea8de;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.error-icon {
+  font-size: 56px;
+  width: 56px;
+  height: 56px;
+  opacity: 0.4;
+}
+
+/* === Two-column Layout === */
+.details-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+  align-items: start;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* === Left Column === */
+.col-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 88px;
+
+  @media (max-width: 860px) {
+    position: static;
+  }
+}
+
+.patch-card {
+  background: linear-gradient(135deg, rgba(13, 27, 42, 0.95), rgba(20, 40, 70, 0.95));
+  border: 1px solid rgba(78, 168, 222, 0.2);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  .patch-wrapper {
+    width: 140px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .patch-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 16px rgba(78, 168, 222, 0.4));
+    transition: filter 0.3s ease;
+
+    &:hover {
+      filter: drop-shadow(0 0 24px rgba(78, 168, 222, 0.7));
+    }
+  }
+
+  .no-patch {
+    width: 140px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(78, 168, 222, 0.05);
+    border: 1px dashed rgba(78, 168, 222, 0.25);
+    border-radius: 50%;
+    gap: 8px;
+
+    mat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      color: rgba(78, 168, 222, 0.3);
+    }
+
+    span {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65rem;
+      color: rgba(78, 168, 222, 0.4);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+  }
+
+  .patch-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    color: rgba(78, 168, 222, 0.5);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+}
+
+.status-card {
+  border-radius: 10px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid;
+
+  &.success {
+    background: rgba(102, 187, 106, 0.1);
+    border-color: rgba(102, 187, 106, 0.35);
+    color: #66bb6a;
+  }
+
+  &.failed {
+    background: rgba(239, 83, 80, 0.1);
+    border-color: rgba(239, 83, 80, 0.35);
+    color: #ef5350;
+  }
+
+  &.unknown {
+    background: rgba(255, 167, 38, 0.1);
+    border-color: rgba(255, 167, 38, 0.35);
+    color: #ffa726;
+  }
+
+  .status-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .status-text {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+}
+
+.links-card {
+  background: linear-gradient(135deg, rgba(13, 27, 42, 0.95), rgba(20, 40, 70, 0.95));
+  border: 1px solid rgba(78, 168, 222, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+
+  .link-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .no-links {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.3);
+    font-style: italic;
+    margin: 0;
+  }
+}
+
+.ext-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  span { flex: 1; }
+
+  .ext-arrow {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    opacity: 0.5;
+  }
+
+  &.article {
+    color: rgba(255, 167, 38, 0.75);
+    background: rgba(255, 167, 38, 0.06);
+    border-color: rgba(255, 167, 38, 0.2);
+    &:hover {
+      background: rgba(255, 167, 38, 0.15);
+      border-color: rgba(255, 167, 38, 0.4);
+      color: #ffa726;
+    }
+  }
+
+  &.wiki {
+    color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+    }
+  }
+
+  &.video {
+    color: rgba(229, 57, 53, 0.75);
+    background: rgba(229, 57, 53, 0.06);
+    border-color: rgba(229, 57, 53, 0.2);
+    &:hover {
+      background: rgba(229, 57, 53, 0.15);
+      border-color: rgba(229, 57, 53, 0.4);
+      color: #ef5350;
+    }
+  }
+}
+
+/* === Right Column === */
+.col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* === Section Title === */
+.card-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #4ea8de;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 0 0 14px 0;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &.failure {
+    color: #ef5350;
+  }
+}
+
+/* === Info Cards === */
+.info-card {
+  background: linear-gradient(135deg, rgba(13, 27, 42, 0.95), rgba(20, 40, 70, 0.95));
+  border: 1px solid rgba(78, 168, 222, 0.2);
+  border-radius: 12px;
+  padding: 20px 24px;
+
+  &.failure-card {
+    border-color: rgba(239, 83, 80, 0.25);
+  }
+}
+
+/* === Mission Header Card === */
+.mission-header-card {
+  background: linear-gradient(135deg, rgba(13, 27, 42, 0.95) 0%, rgba(26, 39, 68, 0.95) 100%);
+  border: 1px solid rgba(78, 168, 222, 0.3);
+  border-radius: 12px;
+  padding: 24px 28px;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #4ea8de, #00d4ff, #4ea8de);
+  }
+}
+
+.flight-badge {
+  display: inline-block;
+  font-family: 'Courier New', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #4ea8de;
+  background: rgba(78, 168, 222, 0.1);
+  border: 1px solid rgba(78, 168, 222, 0.3);
+  border-radius: 4px;
+  padding: 3px 10px;
+  margin-bottom: 12px;
+}
+
+.mission-title {
+  font-family: 'Courier New', monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+}
+
+.meta-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  .meta-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    background: rgba(78, 168, 222, 0.1);
+    border: 1px solid rgba(78, 168, 222, 0.25);
+    border-radius: 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.74rem;
+    color: rgba(255, 255, 255, 0.7);
+
+    mat-icon {
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
+      color: #4ea8de;
+    }
+  }
+}
+
+.info-value {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* === Detail Grid === */
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .detail-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    color: rgba(78, 168, 222, 0.6);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .detail-value {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+
+    &.highlight {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+  }
+}
+
+.details-text {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Large patch in right column */
+.large-patch-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+
+  .large-patch {
+    max-width: 180px;
+    height: auto;
+    filter: drop-shadow(0 0 20px rgba(78, 168, 222, 0.35));
+  }
+}

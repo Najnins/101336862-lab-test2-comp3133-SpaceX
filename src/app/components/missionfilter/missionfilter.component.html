@@ -1,0 +1,41 @@
+<!-- src/app/components/missionfilter/missionfilter.component.html -->
+<div class="filter-panel">
+  <div class="filter-header">
+    <mat-icon class="filter-icon">filter_list</mat-icon>
+    <span class="filter-label">FILTER BY LAUNCH YEAR</span>
+  </div>
+
+  <div class="filter-controls">
+    <mat-form-field appearance="outline" class="year-select">
+      <mat-label>Select Year</mat-label>
+      <mat-select [(ngModel)]="selectedYear" (ngModelChange)="onYearChange()">
+        <mat-option *ngFor="let year of availableYears" [value]="year">
+          {{ year }}
+        </mat-option>
+      </mat-select>
+      <mat-icon matPrefix>calendar_today</mat-icon>
+    </mat-form-field>
+
+    <button
+      mat-stroked-button
+      class="clear-btn"
+      (click)="clearFilter()"
+      [disabled]="!selectedYear">
+      <mat-icon>close</mat-icon>
+      Clear
+    </button>
+  </div>
+
+  <div class="quick-filters">
+    <span class="quick-label">Quick select:</span>
+    <div class="chip-row">
+      <span
+        class="year-chip"
+        *ngFor="let year of ['2024', '2023', '2022', '2021', '2020', '2019', '2018']"
+        [class.active]="selectedYear === year"
+        (click)="selectQuickYear(year)">
+        {{ year }}
+      </span>
+    </div>
+  </div>
+</div>
