@@ -1,7 +1,5 @@
 # 🚀 SpaceX Mission Explorer (Angular)
 ## 101336862-lab-test2-comp3133
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.3.
-
 
 ## Overview
 
